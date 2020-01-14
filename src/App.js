@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
@@ -10,10 +10,10 @@ import Particles from 'react-particles-js';
 const particlesOptions = {
   particles: {
     number: {
-      value: 50,
+      value: 70,
       density: {
         enable: true,
-        value_area: 500
+        value_area: 800
       }
     },
     color: {
@@ -23,24 +23,44 @@ const particlesOptions = {
       shadow: {
         enable: true,
         color: "#3CA9D1",
-        blur: 9      }
+        blur: 9
+      }
     }
   }
 };
 
-function App() {
-  return (
-    <div className="App">
-      <Particles className='particles'
-        params={particlesOptions} />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm />
-      {/*<FaceRecognition />*/}
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+    };
+  };
 
-    </div>
-  );
-};
+  onInputChange = (event) => {
+    console.log(event.target.value);
+  };
+
+  onButtonSubmit = () => {
+    console.log('click');
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Particles className='particles'
+          params={particlesOptions} />
+        <Navigation />
+        <Logo />
+        <Rank />
+        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
+        {/*<FaceRecognition />*/}
+
+      </div>
+    );
+  };
+}
+
+
 
 export default App;
