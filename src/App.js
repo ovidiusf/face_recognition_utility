@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
-const api_key = 'af7f79bec4e548d6a6429588fcd7939d';
-
+// define the app used by CLARIFY API
 const app = new Clarifai.App({
-  apiKey: api_key
+  apiKey: 'af7f79bec4e548d6a6429588fcd7939d'
 });
 
+// All options for the particles.js library
 const particlesOptions = {
   particles: {
     number: {
@@ -40,23 +41,28 @@ class App extends Component {
     super();
     this.state = {
       input: '',
+      imageUrl: ''
     };
   };
 
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({ input: event.target.value });
   };
 
   onButtonSubmit = () => {
+    this.setState({ imageUrl: this.state.input })
     console.log('click');
-    app.models.predict(api_key, "https://api.clarifai.com").then(
-      function (response) {
-        console.log(response);
-      },
-      function (err) {
-
-      }
-    );
+    app.models
+      .predict(Clarifai.FACE_DETECT_MODEL,
+        this.state.input)
+      .then(
+        function (response) {
+          console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+        },
+        function (err) {
+          console.log('error', err)
+        }
+      );
 
   };
 
@@ -68,14 +74,13 @@ class App extends Component {
         <Navigation />
         <Logo />
         <Rank />
-        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-        {/*<FaceRecognition />*/}
+        <ImageLinkForm onInputChange={this.onInputChange}
+          onButtonSubmit={this.onButtonSubmit} />
+        <FaceRecognition imageUrl={this.state.imageUrl} />
 
       </div>
     );
   };
 }
-
-
 
 export default App;
