@@ -8,6 +8,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 
 // define the app used by CLARIFY API
 const app = new Clarifai.App({
@@ -89,7 +90,7 @@ class App extends Component {
   };
 
   onRouteChange = (route) => {
-    this.setState({route: route});
+    this.setState({ route: route });
   };
 
   render() {
@@ -97,16 +98,20 @@ class App extends Component {
       <div className="App">
         <Particles className='particles'
           params={particlesOptions} />
-        <Navigation onRouteChange={this.onRouteChange}/>
-        {this.state.route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange}/>
-          : <div>
+        <Navigation onRouteChange={this.onRouteChange} />
+        {this.state.route === 'home'
+          ? <div>
             <Logo />
             <Rank />
             <ImageLinkForm onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
           </div>
+          : (
+            this.state.route === 'signin'
+              ? <Signin onRouteChange={this.onRouteChange} />
+              : <Register onRouteChange={this.onRouteChange} />
+          )
         }
       </div>
     );
