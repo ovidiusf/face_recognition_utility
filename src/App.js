@@ -72,7 +72,6 @@ class App extends Component {
 
   // sets the state for the box, passing it further
   drawFaceBox = (box) => {
-    // console.log(box);
     this.setState({ box: box });
   };
 
@@ -82,7 +81,6 @@ class App extends Component {
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then((response) => {
-        // console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
         this.drawFaceBox(this.calculateFaceLocation(response));
       })
       .catch((err) => console.log('error', err));

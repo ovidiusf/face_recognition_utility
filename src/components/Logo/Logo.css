@@ -1,6 +1,11 @@
 .Tilt {
   background: #3a1c71; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #ffaf7b, #d76d77, #3a1c71); /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffaf7b,
+    #d76d77,
+    #3a1c71
+  ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
     #ffaf7b,
